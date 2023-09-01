@@ -18,6 +18,8 @@ public class GameManager : MonoBehaviour
     public int gold;
     public int villageRating;
     public int villageRatingGoal;
+    [HideInInspector]
+    public bool gameDone;
 
     [Header("References")]
     public GameObject player;
@@ -195,7 +197,7 @@ public class GameManager : MonoBehaviour
     public void spawnController()
     {
         spawnerTimer -= Time.deltaTime;
-        if (spawnerTimer <= 0)
+        if (spawnerTimer <= 0 && !gameDone)
         {
             spawnerTimer = spawnerTimerSet;
             int spawnerIndex = (int)Random.Range(0, spawnerList.Count-1);
@@ -262,7 +264,12 @@ public class GameManager : MonoBehaviour
 
     public void victory()
     {
-        Time.timeScale = 0f;
+
+        gameDone = true;
+        foreach (GameObject curEnemy in GameObject.FindGameObjectsWithTag("Enemy"))
+        {
+            curEnemy.GetComponent<Enemy_Base>().Kill();
+        }
         panelVictory.SetActive(true);
     }
 
@@ -291,10 +298,10 @@ public class GameManager : MonoBehaviour
         {
             case true:
                 musicNoPer.volume = Mathf.MoveTowards(musicNoPer.volume, 0f, Time.deltaTime);
-                musicFull.volume = Mathf.MoveTowards(musicFull.volume, 0.5f, Time.deltaTime);
+                musicFull.volume = Mathf.MoveTowards(musicFull.volume, 0.3f, Time.deltaTime);
                 break;
             case false:
-                musicNoPer.volume = Mathf.MoveTowards(musicNoPer.volume, 0.5f, Time.deltaTime);
+                musicNoPer.volume = Mathf.MoveTowards(musicNoPer.volume, 0.3f, Time.deltaTime);
                 musicFull.volume = Mathf.MoveTowards(musicFull.volume, 0f, Time.deltaTime);
                 break;
         }

@@ -17,7 +17,6 @@ public class Building_InteractSpot : MonoBehaviour
                     GameManager.instance.setCurrentPlot(plot);
                     break;
             }
-
         }
     }
 
@@ -31,7 +30,6 @@ public class Building_InteractSpot : MonoBehaviour
                     plot.takePotion();
                     break;
             }
-
         }
     }
 

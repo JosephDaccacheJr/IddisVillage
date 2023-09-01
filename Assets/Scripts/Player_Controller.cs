@@ -14,6 +14,9 @@ public class Player_Controller : MonoBehaviour
     CharacterController _con;
     Animator _anim;
 
+    [Header("Sounds")]
+    public AudioSource sfxSwing;
+
     float _inX, _inY; // Input floats
 
     // Movement controls
@@ -55,7 +58,7 @@ public class Player_Controller : MonoBehaviour
 
     void ReadInputs()
     {
-        if(GameManager.instance.playerHealth >= 0)
+        if(GameManager.instance.playerHealth >= 0 && !GameManager.instance.gameDone)
         {
             _inX = Input.GetAxis("Horizontal");
             _inY = Input.GetAxis("Vertical");
@@ -65,7 +68,7 @@ public class Player_Controller : MonoBehaviour
             {
                 _isAttacking = true;
             }
-      }
+        }
         else
         {
             _inX = _inY = 0f;
@@ -92,9 +95,7 @@ public class Player_Controller : MonoBehaviour
         {
             _animMoveSpeed = 0f;
         }
-
         _con.Move(_mov);
-
     }
 
     void Animations()
@@ -106,6 +107,7 @@ public class Player_Controller : MonoBehaviour
             _anim.SetTrigger("Attack");
             _isAttacking = false;
             _mousePosition = Input.mousePosition;
+            sfxSwing.Play();
         }
         if (_anim.GetCurrentAnimatorClipInfo(1)[0].clip.name == "Rogalic_attack_1")
         {

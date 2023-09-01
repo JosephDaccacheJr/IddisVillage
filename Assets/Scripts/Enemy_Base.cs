@@ -15,9 +15,13 @@ public class Enemy_Base : MonoBehaviour
     public GameObject enemyAttackZone;
     public ParticleSystem bloodSquirt;
 
+
     GameObject _player;
     NavMeshAgent _nav;
     Animator _anim;
+
+    [Header("Sound Effects")]
+    public AudioSource sfxGotHit;
 
     // State Controllers
     IEnemyState currentState;
@@ -51,6 +55,7 @@ public class Enemy_Base : MonoBehaviour
         if (health <= 0)
             return;
 
+        sfxGotHit.Play();
         bloodSquirt.Play();
         health -= dmg;
         if (health <= 0)
@@ -63,7 +68,7 @@ public class Enemy_Base : MonoBehaviour
         }
     }
 
-    void Kill()
+    public void Kill()
     {
         foreach(BoxCollider bc in GetComponents<BoxCollider>()) 
         {

@@ -6,12 +6,19 @@ using UnityEngine.SceneManagement;
 public class MainMenu : MonoBehaviour
 {
     public GameObject panelHowToPlay;
+    public GameObject startFadeOut;
     void Start()
     {
         Application.targetFrameRate = 60;
     }
 
     public void StartGame()
+    {
+        startFadeOut.SetActive(true);
+        Invoke("GoToGame", 1.3f);
+    }
+
+    void GoToGame()
     {
         SceneManager.LoadScene("Game");
     }
